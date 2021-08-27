@@ -2,13 +2,15 @@
   "name": "pizzeria-portal1",
   "version": "0.1.0",
   "private": true,
-  
+  "homepage": "/panel/",
   "scripts": {
     "start": "run-p start:* ",
     "start-silent": "run-p start > /dev/null",
     "start:react": "react-scripts start",
+    "start:api": "npm run build && node server.js",
     "start-and-test": "run-p start-silent test ",
     "build": "react-scripts build",
+    "lint": "esw --watch --clear",
     "test": "react-scripts test --noStackTrace",
     "test-all": "react-scripts test --watchAll=false --noStackTrace",
     "test-related": "react-scripts test --watchAll=false --noStackTrace --findRelatedTests",
@@ -21,7 +23,7 @@
   },
   "lint-staged": {
     "src/**/*.js": [
-      "yarn test-related --",
+      "npm test-related --",
       "eslint"
     ]
   },
@@ -37,13 +39,17 @@
       "last 1 safari version"
     ]
   },
-
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.4",
+    "@types/react": "^17.0.19",
+    "@types/react-dom": "^17.0.9",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
+    "json-server": "^0.16.3",
     "node-sass": "^6.0.1",
     "npm-run-all": "^4.1.5",
     "react": "^16.0.2",
@@ -53,9 +59,11 @@
     "react-scripts": "4.0.3",
     "react-test-renderer": "^16.13.0",
     "redux": "^4.1.1",
+    "typescript": "^4.4.2",
     "web-vitals": "^1.0.1"
   },
   "devDependencies": {
+    "eslint-watch": "^7.0.0",
     "husky": "^7.0.2",
     "lint-staged": "^11.1.2",
     "redux-devtools-extension": "^2.13.9"
