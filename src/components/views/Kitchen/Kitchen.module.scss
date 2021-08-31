@@ -2,4 +2,31 @@
 
 .component {
   padding: $base-size;
+
+  .tableCellOrderProduct {
+    padding: 0;
+
+    & > *:not(:last-child)  {
+      border-bottom: 1px solid lightgray;
+    }
+
+    .orderProduct {
+      width: 100%;
+
+      .orderProductHeader {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .orderProductOption {
+        color: grey;
+        padding: 0;
+
+        .orderProductOptionLabel {
+          font-weight: 500;
+          margin-right: 6px;
+        }
+      }
+    }
+  }
 }
