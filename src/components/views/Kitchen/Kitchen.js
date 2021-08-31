@@ -124,7 +124,7 @@ const Kitchen = () => {
   return (
     <Paper className={styles.component}>
       <Typography variant="h4" component="h4" gutterBottom>
-        Kitchen Orders
+        Kitchen orders
       </Typography>
       <Table>
         <TableHead>
@@ -154,8 +154,8 @@ const Kitchen = () => {
                           <div>Quantity: {product.amount}</div>
                         </div>
                         <List>
-                          {product.params.map(param => (
-                            <ListItem key={product.params[param]}className={styles.orderProductOption}>
+                          {product.params.map((param, index) => (
+                            <ListItem key={index}className={styles.orderProductOption}>
                               <span className={styles.orderProductOptionLabel}>
                                 {param.label}:
                               </span>
