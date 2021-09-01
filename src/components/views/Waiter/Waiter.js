@@ -17,6 +17,7 @@ class Waiter extends React.Component {
       active: PropTypes.bool,
       error: PropTypes.oneOfType([PropTypes.bool,PropTypes.string]),
     }),
+    updateStatus: PropTypes.func,
   }
 
   componentDidMount(){
@@ -24,34 +25,54 @@ class Waiter extends React.Component {
     fetchTables();
   }
 
-  renderActions(status){
+  renderActions(id, status){
+    const {updateStatus} = this.props;
+
     switch (status) {
       case 'free':
         return (
           <>
-            <Button>thinking</Button>
-            <Button>new order</Button>
+            <Button onClick={() => updateStatus(id, 'thinking')}> thinking</Button>
+            <Button 
+              onClick={() => updateStatus(id, 'ordered')}
+              href={process.env.PUBLIC_URL + '/waiter/order/new'}>new order
+            </Button>
           </>
         );
       case 'thinking':
         return (
-          <Button>new order</Button>
+          <Button 
+            onClick={() => updateStatus(id, 'ordered')}
+            href={process.env.PUBLIC_URL + '/waiter/order/new'}>new order
+          </Button>
         );
       case 'ordered':
         return (
-          <Button>prepared</Button>
+          <>
+            <Button onCLick={() => updateStatus(id, 'prepared')}>prepared</Button>
+            <Button href={process.env.PUBLIC_URL + '/waiter/order/:id'}>new order</Button>
+          </>
         );
       case 'prepared':
         return (
-          <Button>delivered</Button>
+          <Button 
+            onClick={() => updateStatus(id, 'delivered')}
+            href={process.env.PUBLIC_URL + '/waiter/order/new'}>delivered
+          </Button>
         );
       case 'delivered':
         return (
-          <Button>paid</Button>
+          <Button 
+            onClick={() => updateStatus(id, 'paid')}
+            href={process.env.PUBLIC_URL + '/waiter/order/new'}>paid
+          </Button>
         );
       case 'paid':
         return (
-          <Button>free</Button>
+          <Button 
+            onClick={() => updateStatus(id, 'free')}
+            href={process.env.PUBLIC_URL + '/waiter/order/new'}>free
+          </Button>
         );
       default:
         return null;
@@ -87,23 +108,23 @@ class Waiter extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {tables.map(row => (
-                <TableRow key={row.id}>
+              {tables.map(table => (
+                <TableRow key={table.id}>
                   <TableCell component="th" scope="row">
-                    {row.id}
+                    {table.id}
                   </TableCell>
                   <TableCell>
-                    {row.status}
+                    {table.status}
                   </TableCell>
                   <TableCell>
-                    {row.order && (
-                      <Button to={`${process.env.PUBLIC_URL}/waiter/order/${row.order}`}>
-                        {row.order}
+                    {table.order && (
+                      <Button to={`${process.env.PUBLIC_URL}/waiter/order/${table.order}`}>
+                        {table.order}
                       </Button>
                     )}
                   </TableCell>
                   <TableCell>
-                    {this.renderActions(row.status)}
+                    {this.renderActions( table.id, table.status)}
                   </TableCell>
                 </TableRow>
               ))}
